@@ -9,3 +9,5 @@ Norya is an AI receptionist for UK service businesses. It answers calls, uses re
 3. Run `pnpm dev` and open http://localhost:3000.
 
 The health endpoint is available at `/api/health`.
+
+Production: https://norya-ai.vercel.app

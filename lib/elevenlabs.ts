@@ -66,6 +66,16 @@ export class ElevenLabsClient {
     });
   }
 
+  createTool(tool: unknown) {
+    return this.request<{ id: string }>('/convai/tools', { method: 'POST', body: tool });
+  }
+
+  attachTools(agentId: string, toolIds: string[]) {
+    return this.request<void>(`/convai/agents/${encodeURIComponent(agentId)}`, {
+      method: 'PATCH', body: { conversation_config: { agent: { prompt: { tool_ids: toolIds } } } },
+    });
+  }
+
   importPhoneNumber(input: { phoneNumber: string; agentId: string; label: string }) {
     return this.request<{ phone_number_id: string }>('/convai/phone-numbers', {
       method: 'POST',

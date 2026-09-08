@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { BusinessProfile } from '../lib/elevenlabs';
+import { buildPrompt } from '../lib/agent-prompt';
 import { provisionAgent, type AgentPatch, type AgentRecord, type AgentRepository } from '../lib/provisioning';
 
 const profile: BusinessProfile = {
@@ -24,6 +25,15 @@ class MemoryRepository implements AgentRepository {
     return { ...this.record };
   }
 }
+
+test('prompt grounds the agent in supplied facts and safe fallbacks', () => {
+  const prompt = buildPrompt(profile);
+  assert.match(prompt, /Norya Test Salon/);
+  assert.match(prompt, /Cut £30; colour £75/);
+  assert.match(prompt, /rather than guessing a price, time, or policy/);
+  assert.match(prompt, /say plainly you're an\s+AI assistant/);
+  assert.match(prompt, /emergency/);
+});
 
 test('provisions once and reaches live', async () => {
   const agents = new MemoryRepository();

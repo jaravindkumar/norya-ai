@@ -1,4 +1,7 @@
 import 'server-only';
+import { buildPrompt } from './agent-prompt';
+
+export { buildPrompt } from './agent-prompt';
 
 const ELEVENLABS_BASE_URL = 'https://api.elevenlabs.io/v1';
 
@@ -12,23 +15,6 @@ export type BusinessProfile = {
   greeting: string;
   voiceId?: string;
 };
-
-export function buildPrompt(profile: Pick<BusinessProfile, 'businessName' | 'industry' | 'services' | 'openingHours' | 'extra'>) {
-  return `You are the receptionist for ${profile.businessName}, a ${profile.industry} business.
-
-SERVICES AND PRICES
-${profile.services}
-
-OPENING HOURS
-${profile.openingHours}
-
-${profile.extra ? `ADDITIONAL NOTES\n${profile.extra}\n` : ''}Only state facts from the details above. If you don't know something, take a
-message rather than guessing a price, time, or policy. Confirm the service,
-offer specific times, take a name and mobile number, and read the booking
-back before finishing. If asked whether you're human, say plainly you're an
-AI assistant for ${profile.businessName}. If the caller describes an emergency,
-stop trying to book and tell them how to reach a person immediately.`;
-}
 
 type RequestOptions = { method?: 'GET' | 'POST' | 'PATCH'; body?: unknown };
 

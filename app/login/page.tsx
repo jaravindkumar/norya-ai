@@ -18,7 +18,12 @@ export default function LoginPage() {
     });
     if (error) {
       setStatus('error');
-      setMessage('We could not send the link. Please try again.');
+      const isEmailRateLimit = error.status === 429 || error.code === 'over_email_send_rate_limit';
+      setMessage(
+        isEmailRateLimit
+          ? 'Too many sign-in links were requested. Please wait up to an hour and try again.'
+          : 'We could not send the link. Please try again.',
+      );
       return;
     }
     setStatus('sent');

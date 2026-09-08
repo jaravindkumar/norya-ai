@@ -1,3 +1,5 @@
+import { DemoCallForm } from './demo-call-form';
+
 export default function HomePage() {
   return (
     <main className="shell">
@@ -11,7 +13,7 @@ export default function HomePage() {
         <p className="lede">Norya answers every call, understands what customers need, and books the next step—day or night.</p>
         <div className="actions">
           <a className="button buttonPrimary" href="/login">Start your free trial</a>
-          <a className="button buttonQuiet" href="#how-it-works">See how it works</a>
+          <a className="button buttonQuiet" href="#demo">Get a demo call</a>
         </div>
       </section>
       <section className="proof" id="how-it-works" aria-label="Product benefits">
@@ -19,6 +21,7 @@ export default function HomePage() {
         <article><strong>Real-time</strong><span>Availability checked</span></article>
         <article><strong>One view</strong><span>Calls and bookings</span></article>
       </section>
+      <DemoCallForm />
     </main>
   );
 }

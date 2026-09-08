@@ -1,9 +1,10 @@
-export default function OnboardingPage() {
-  return (
-    <main className="dashboardShell">
-      <p className="eyebrow">Setup</p>
-      <h1 className="dashboardTitle">Tell Norya about your business.</h1>
-      <p className="authCopy">Your authenticated workspace is ready for guided onboarding.</p>
-    </main>
-  );
+import { redirect } from 'next/navigation';
+import { supabaseServer } from '@/lib/supabase-server';
+import Wizard from './wizard';
+
+export default async function OnboardingPage() {
+  const supabase = supabaseServer();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/login?next=/onboarding');
+  return <Wizard email={user.email ?? ''} />;
 }
